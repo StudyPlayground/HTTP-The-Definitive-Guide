@@ -20,7 +20,7 @@ paginate: true
 
 - `Base64`는 바이너리 데이터를 64개의 문자 집합으로 표현하는 인코딩 체계입니다.
   - `0-9`, `A-Z`, `a-z`, `+`, `/`, `=`(패딩값: 비어있음을 뜻함)
-  - 예시: `http://charsyam.wordpress.com/abc?q===query=abcd+/=`
+  - 예시: `http://charsyam.wordpress.com/abc===query=abcd+/=`
 
 ---
 
