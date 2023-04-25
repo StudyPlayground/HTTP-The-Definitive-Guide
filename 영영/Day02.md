@@ -33,9 +33,9 @@
             : orders 자원 수정 요청 → URI/orders/2 가능
             → 더 이상 /orders/1 로 접근 불가 
     
-    ```json
+    ```
     //요청
-    **POST /orders** HTTP/1.1
+    POST /orders HTTP/1.1
     Host: example.com
     Content-Type: application/json
     
@@ -46,8 +46,8 @@
     }
     
     //응답
-    HTTP/1.1 **201 Created**
-    **Location: /orders/2**
+    HTTP/1.1 201 Created
+    Location: /orders/2
     Content-Type: application/json
     
     {
@@ -65,30 +65,30 @@
             1. orders/1 자원이 완전히 대체됨 
             2. 두번째 요청에도 항상 같은 자원을 대체함 
     
-    ```json
+    ```
     //요청
-    **PUT /orders/1** HTTP/1.1
+    PUT /orders/1 HTTP/1.1
     Host: example.com
     Content-Type: application/json
     
-    **{
+    {
         "id": 1,
         "product": "apple",
         "quantity": 10,
         "price": 2.0
-    } //전체 자원** 
+    } //전체 자원
     
     //응답
-    HTTP/1.1 **200 OK**
+    HTTP/1.1 200 OK
     Content-Type: application/json
     
-    **{
+    {
         "id": 1,
         "product": "apple",
         "quantity": 10,
         "price": 2.0,
         "status": "updated"
-    }**
+    }
     ```
     
 3. `DELETE`
@@ -98,33 +98,33 @@
             2. 삭제된 자원은 서버에서 더 이상 접근 불가 
             3. 두번째 요청에도 이미 삭제된 자원이 없으므로 결과 유지 
 
-```json
+```
 //요청
-**DELETE /orders/1** HTTP/1.1
+DELETE /orders/1 HTTP/1.1
 Host: example.com
 
 //응답
-HTTP/1.1 **204 No Content**
+HTTP/1.1 204 No Content
 ```
 
-1. `PATCH`
+4. `PATCH`
     1. 서버에 존재하는 자원의 일부분만 수정
         1. orders/1 자원에 대해  요청을 보낸다고 가정 
             1. orders/1 만 수정함 (자원 전체 수정 X)
     
-    ```json
+    ```
     //요청
-    **PATCH /orders/1** HTTP/1.1
+    PATCH /orders/1 HTTP/1.1
     Host: example.com
     Content-Type: application/json
     
-    **{
+    {
         "quantity": 5,
         "price": 1.5
-    }**
+    }
     
     //응답
-    **PATCH /orders/1** HTTP/1.1
+    PATCH /orders/1** HTTP/1.1
     Host: example.com
     Content-Type: application/json
     
@@ -141,7 +141,7 @@ HTTP/1.1 **204 No Content**
 1. **`POST`**
     1. 서버에 **아직 존재하지 않는 자원**을 생성할 때 
     2. 새로운 피드, 주문 추가 등 
-2. `**PUT**`
+2. **`PUT`**
     1. 서버에 **이미 존재하는 자원**을 업데이트할 때 
     2. 글을 수정, 생성된 주문의 상태를 변경하는 등 
     
@@ -149,11 +149,11 @@ HTTP/1.1 **204 No Content**
 ### PUT, PATCH는 각각 언제 유용할까?
 
 - 둘 다 자원을 수정하는 데 사용
-1. `**PUT**`
+1. **`PUT`**
     1. **기존 자원을 완전히 대체할 때** 
     2. 요청 본문에 변경할 자원의 전체정보를 포함 
     3. 게시글 전체 내용을 수정, 상품의 모든 정보가 변경되는 경우 
-2. `**PATCH**`
+2. **`PATCH`**
     1. **특정 필드만 업데이트, 추가**할 경우 
     2. 요청 본문에 변경된 필드만을 포함 
     3. 게시글 제목만 수정, 상품의 가격만 수정하는 경우 
@@ -191,7 +191,7 @@ HTTP/1.1 **204 No Content**
 → 이전 요청과 다음 요청이 서로 영향을 주지 않음 
 ⇒ 이전 요청, 응답에 대한 정보를 저장, 유지하지 않음
     - 인증 같은 기능을 처리하기에는 (매번 인증을 해야 하므로) 한계가 있음 
-    → 웹 어플리케이션에서는 상태를 유지하기 위한 쿠키를 사용/
+    → 웹 어플리케이션에서는 상태를 유지하기 위한 쿠키를 사용
 
 ### 지속 커넥션
 
@@ -221,7 +221,7 @@ HTTP/1.1 **204 No Content**
 - 클라이언트~서버 간 상태를 전달하는 쿠키 대신→ 헤더 압축(header compression) 기술을 사용
 
 <aside>
-💡 **헤더 압축 기술?**
+💡 헤더 압축 기술?
 
 - HTTP 헤더는 중복된 정보를 포함하고 있어, 데이터 전송량을 증가시킴
 → 미리 정의된 헤더 테이블에 헤더 정보를 추가 
@@ -230,8 +230,8 @@ HTTP/1.1 **204 No Content**
 
 </aside>
 
-```json
-//응답 (헤더 필드, 데이터 등을 **바이너리 형식으로** 모두 압축) 
+```
+//응답 (헤더 필드, 데이터 등을 바이너리 형식으로 모두 압축) 
 :status: 200
 cache-control: max-age=604800
 content-type: text/html; charset=UTF-8
@@ -241,6 +241,6 @@ last-modified: Thu, 17 Oct 2019 07:18:26 GMT
 server: ECS (nyb/1D14)
 vary: Accept-Encoding
 // 해당 응답 바디가 gzip 방식으로 압축되어 있다는 것을 나타냄 
-**content-encoding: gzip**
+content-encoding: gzip
 content-length: 648
 ```
