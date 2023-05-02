@@ -296,4 +296,7 @@ HTTP/2에서 사용되는 기술로, 기존 HTTP/1.1의 Connection Keep-Alive, P
 
 응답 프레임들은 요청 순서에 상관 없이 서버에서 만들어진대로 클라이언트에게 전달 될 수 있다.
 
+노션 페이지: https://raehan.notion.site/4-69fbba7ac45341c68cabdf1ff9f7dd88
+
 (참고: [https://web.dev/performance-http2/](https://web.dev/performance-http2/))
+
