@@ -353,3 +353,11 @@ OPTIONS 메서드는 서버나 웹 서버의 특정 리소스가 어떤 기능�
 Allow: GET, HEAD, PUT
 
 다만 이 부분은 구현 안된 경우가 많다.
+
+애플(https://www.apple.com) 같은 경우에는 지원을 해주고, 구글 같은 경우엔 나오는 값은 있으나 405에러가 떨어지는걸로 봐서 지원하지 않는다. mdn 같은 경우에는 아예 에러가 떨어진다.
+
+```shell
+curl -X OPTIONS https://developer.mozilla.org/ -i
+curl -X OPTIONS https://www.google.com -i
+curl -X OPTIONS https://www.apple.com -i
+```
