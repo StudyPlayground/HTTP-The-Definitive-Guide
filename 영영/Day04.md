@@ -1,0 +1,132 @@
+## 웹 서버
+
+1. **하드웨어 측면**
+    1. 웹 서버의 소프트웨어, website의 컴포넌트 파일(html, images, CSS stylesheets, Javascript files)들을 저장하는 컴퓨터
+    2. 인터넷에 연결되어 연결된 다른 기기들이 웹서버의 데이터(컴포넌트 파일들)을 주고받을 수 있도록 함
+2. **소프트웨어 측면**
+    1. 웹 사용자가 어떻게 호스트 파일들에 접근하는지를 관리
+    2. HTTP 서버로 국한 
+        
+        ![브라우저는 HTTP를 통해 파일을 요청하고, 요청이 올바른 웹서버(하드웨어)에 도달하면 HTTP 서버(소프트웨어)는 요청된 문서를 HTTP를 이용해 보내줌 ](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c45db005-85f9-4220-8c97-0813e2584754/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-05-08_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_4.52.52.png)
+        
+        브라우저는 HTTP를 통해 파일을 요청하고, 요청이 올바른 웹서버(하드웨어)에 도달하면 HTTP 서버(소프트웨어)는 요청된 문서를 HTTP를 이용해 보내줌 
+        
+    
+
+### 정적 웹 서버와 동적 웹 서버
+
+1. **정적 웹 서버** 
+: HTTP 서버(소프트웨어)가 있는 컴퓨터로 구성됨
+    - HTML과 같은 **정적 콘텐츠를 제공**
+    - 서버가 요청된 파일을 브라우저에 그대로 전송
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1190edb7-d1d5-4d99-90eb-f5d645345793/Untitled.png)
+        
+2. **동적 웹 서버**
+: 정적 웹 서버 + **(일반적으로) 애플리케이션 서버 + 데이터베이스**
+    
+    ![스크린샷 2023-05-09 오전 12.22.50.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3a513554-9afe-42a0-b13c-213f12f859a0/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-05-09_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_12.22.50.png)
+    
+- 애플리케이션 서버가 업데이트를 하고 HTTP 서버를 통해 전송하므로 ‘동적’
+    - 최종 웹페이지를 생성하기 위해, 애플리케이션 서버는 데이터베이스로 온 콘텐츠들로 이루어진 HTML 템플릿을 채움
+    - MDN, Wikipedia 같은 사이트도 수 천개의 웹페이지를 갖고 있지만 실제 HTML 문서를 갖고 있는 게 X → HTML 템플릿 + 엄청 큰 데이터 베이스
+        - 애플리케이션 서버 Kuma 
+        → [https://developer.mozilla.org/ko/docs/Learn/Common_questions/Web_mechanics/What_is_a_web_server](https://developer.mozilla.org/ko/docs/Learn/Common_questions/Web_mechanics/What_is_a_web_server)
+        이 사이트를 호스팅하고 있는 웹 서버는 1. 데이터베이스로부터 내용 받기 2. 구성하기. 3.HTML 템플릿에 집어 넣기 4. 브라우저에게 결과 보내기 등
+    
+
+## Web Application Server
+
+- `**SPA(Single Page Application)**`의 등장 → 처리 지연, 과부하 등의 문제 발생 → 서버 분리 필요성이 대두됨
+
+<aside>
+💡 **SPA**
+- 페이지 갱신에 필요한 데이터만을 전달받아 페이지를 갱신
+- 사용자마다 필요한 데이터가 다름
+
+</aside>
+
+- `**Web Server` - 아파치, NginX**
+    - **클라이언트의 요청을 받을 수 있음**
+    - HTML, CSS 등 **정적 콘텐츠** 요청 시 앞단(즉 웹서버)에서 빠르게 **제공**
+        - 정적 콘텐츠: html, css, image처럼 어느 사용자 요청이든 항상 동일한 콘텐츠
+    - **동적 콘텐츠가** 필요하면 WAS에 요청을 보냄 → WAS가 처리한 데이터를 받아 클라이언트에게 전달함
+        - 동적 콘텐츠: 요청 인자에 따라 바뀔 수 있는 콘텐츠
+- `**WAS**`(Web Application Server)  - **톰캣**
+    - 클라이언트로부터 HTTP 요청 받을 수 있다
+        - 대부분의 WAS는 Web server를 내장하고 있으므로
+    - 요청에 맞는 정적 콘텐츠도 제공 가능하다
+    - **DB 조회 및 비즈니스 로직 처리  →동적 사이트를 생성할 수 있는 서버**
+        - 트랜잭션 처리, 보안, 세션 관리, 데이터베이스 연동 등의 고급 기능을 제공
+    - **Web Server + Web Container** 
+    : 둘을 결합하여, 웹 서버에서 요청을 받아들이고, 애플리케이션 서버의 기능을 수행하여 동적인 콘텐츠를 생성한 후, 클라이언트에게 전달하는 역할을 수행
+        - Web Server: HTTP 프로토콜을 이용하여 클라이언트의 요청(request)을 받아들이고, 그에 대한 응답(response)을 제공하는 역할을 함. 주요 웹 서버로는 Apache, Nginx, IIS 등
+        - Web Container: Java Servlet, JavaServer Pages(JSP), JavaServer Faces(JSF)와 같은 웹 애플리케이션 컴포넌트를 실행하는 환경을 제공
+    
+
+![스크린샷 2023-05-09 오전 12.26.22.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/597b2377-cc6b-43e6-bd0d-4be0761b31c5/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-05-09_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_12.26.22.png)
+
+<aside>
+💡 WAS가 다 할 수 있는데 **왜 Web Server를 함께 사용**하느냐?
+
+- 책임 분할을 통한 서버 부하 방지 
+- 여러 WAS가 나누어서 처리할 수 있도록 로드밸런싱
+- WAS들의 헬스 체크 (주기적으로 HTTP 요청을 보내 서버 상태 확인)
+- 리버스 프록시로 실제 서버를 외부 노출 X (WAS는 DB 조회 가능하므로 외부 유출 위험) 보안 상승
+
+⇒ **웹서버, WAS의 역할이 겹치기도 하지만, 각자 특화된 부분을 내세워 보안/운영을 잘하는 서버가 클라이언트를 상대, WAS는 뒤에서 동적 요소를 만들어내는 데 집중함**  
+
+</aside>
+
+### Web server - **NginX(엔진 엑스) 중심으로**
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9dc2b1df-8120-4df3-9fd6-a07e040bfe3b/Untitled.png)
+
+- 웹 어플리케이션을 안정적으로 제공할 수 있도록 돕는 웹 서버 소프트웨어 중 하나  (Apache도 있음 )
+
+<aside>
+💡 **Apache와 NginX**
+- Apache:  다중 프로세스, 멀티프로세스 모듈 방식으로 일함, 요청 하나당 스레드 하나가 처리하는 구조, 사용자가 많아지면 CPU와 메모리 사용이 증가해서 성능 저하 (다양하고 검증된 기능에서 우선) 
+
+-NginX: 비동기 **이벤트** 기반으로 처리, 요청이 들어오면 어떤 동작을 해야하는지만 알려주고 다음 요청을 처리, 흐름이 끊기지 않고 응답이 빠름 (성능과 가벼움에서 우선)
+
+</aside>
+
+<aside>
+💡 **NginX의 주요 기능 
+:  정적 콘텐츠를 처리하는 데 특화되어 있으며, 동적 콘텐츠를 처리하는 WAS와 연동하여 사용되기도 함**
+
+1. **리버스 프록시**: 중계하는 서버
+  - **클라이언트**가 서버를 호출할 때 직접 서버에 접근X
+  대신 **리버스 프록시 서버를 호출함** 
+  **리버스 프록시 서버가 서버에 요청**을 하고 응답을 받아 **클라이언트에 전달**함 
+ → 실제 서버의 IP를 감출 수 있어 보안을 높일 수 있다는 장점
+
+** forward proxy: 서버에 방문하는 손님들이 자기네 집 주소를 감추는 것 
+** reverse proxy: 손님들에게 서버의 정보를감추는 것  
+(**보안 상** 내부 구조를 숨길 필요가 있을 때, 특정 파일이 어느 폴더에, 서비스가 몇 번 포트로 돌아가는지 감추는 것) 
+
+**2. 로드 밸런싱**: 서버에 가해지는 부하 분산 
+- 이용자가 많아 요청도 많을 때, 하나의 서버에서 모두 처리하지 않고 **여러 서버를 이용하여 요청을 처리하게 함** 
+- 서버의 로드율, 부하량 등을 고려하여 서버들에게 분산 처리하는 것을 ‘로드밸런싱’ 
+→ 하나의 서버가 멈춰도 서비스 중단 없이 다른 서버가 서비스를 계속 유지할 수 있는 무중단 배포가 가능하다는 장점 
+
+**3. 캐싱** (리버스 프록시의 캐시)
+-  서버 단에서의 캐시 
+- 서버 방문자들이 자주, 반복적으로 찾는 리소스들을 캐싱해두었다가 바로 건네줌 
+ → 사용자 입장에서 빠르게 데이터를 볼 수 있음
+
+</aside>
+
+---
+
+### reference
+
+
+[What is a web server? - Learn web development | MDN](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/What_is_a_web_server)
+
+[웹 서버와 NginX](https://tecoble.techcourse.co.kr/post/2021-07-30-web-server-and-nginx/)
+
+[아파치, NginX, 톰캣이 뭔가요? (+ 웹서버, WAS, 로드밸런싱, 프록시)](https://www.youtube.com/watch?v=Zimhvf2B7Es&t=670s)
+
+[[10분 테코톡] 👳‍♂️ 알리의 Web Server vs WAS](https://www.youtube.com/watch?v=mcnJcjbfjrs)
