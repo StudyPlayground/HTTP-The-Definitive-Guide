@@ -284,3 +284,17 @@ server.listen(8080, () => {
 - public - 남들과 공유된다. 주로 wiki 같은 퍼블릭하고 공유 가능한 문서. 공유 캐시. Authorization 헤더가 있으면 사용 못함.
 - stale-while-revalidate - 일단 오래된거 주고, 뒤에서 서버한테 물어보고 새거 있으면 몰래 업데이트 해놔. optimistic update.
 - stale-if-error - 일단 오래된거 주고, 서버가 에러가 나도 에러 표시 안하고 캐시된거 일단 준다.에러 표시 싫어서.. 엄청 특수한 전략.
+
+캐시 신선도 검사
+
+위에 있는건 캐시 입장, 아래는 실제 데이터 기준.
+
+캐시에 있는 데이터와 서버의 데이터가 서로 같은지를 비교하는 방법
+
+E-tag -
+
+Last-modified
+
+cache-control: max-age: 캐시를 얼마나 저장할지
+
+Last-modified 류, 캐시랑 서버의 데이터가 같은지 확인하는 것
