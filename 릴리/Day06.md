@@ -28,15 +28,6 @@ robots.txt 파일은 크롤러가 사이트에서 액세스할 수 있는 URL을
 비밀번호로 페이지를 보호해야 합니다.
 ```
 
-하지만 만약에 robots.txt 에서 Disallow 를 선언하고 HTML 파일에 Meta Robots Tag 도 선언한다면 무슨 일이 일어나는가?
-
-위에서 **"크롤러 입장에서도 우선적으로 robots.txt 를 보고 페이지 접근 허용 여부를  판단하는 것이 먼저이다." 라고 써있다.** 
-
-이로 인해, 크롤러가 페이지 접근을 아예 할 수 없기에, 미노출을 위한 메타 태그를 선언하더라도 읽지를 못한다.
-
-결과적으로 검색 결과에 계속 노출될 수 밖에 없다.
-
-크롤링 -> 인덱싱 순서로 이루어지더라도 robots.txt 는 크롤링, meta robots tag 는 인덱싱에 포커스를 맞추어 생각해야한다.
 
 [Robots.txt vs Meta Robots Tag :: 마이구미](https://mygumi.tistory.com/407)
 
