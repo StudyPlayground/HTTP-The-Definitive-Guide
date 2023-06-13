@@ -1,3 +1,49 @@
+# 3-way handshake + TLS
+
+클라이언트와 서버가 TCP로 커넥션을 맺기 위해서 3-way handshake로 연결을 하고 4-way handshake로 연결을 끊는다. 이로 인해 높은 신뢰성을 갖는다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/baaa9518-67db-4377-9442-d3f5bbcb3b16/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cf14249d-82e3-410c-b1cb-a9d3b78d0e57/Untitled.png)
+
+# 2. TLS Handshake
+
+TLS는 SSL의 업데이트 버전이다.
+
+HTTPS handshake는 따로 있다.
+
+만약 서버가 클라이언트에게 키를 주고 클라이언트가 그 키로 암호화해여 서버에게 보낸다면?? 암호화 되기 전에 키를 탈취 당하면 무용지물이다. 이게 대칭키 방식이다.
+
+![cloudflare](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6c1f5da6-7f80-478f-9b00-56ec74dce9eb/Untitled.png)
+
+cloudflare
+
+TLS Hanshake는 TCP Hanshake의 마무리와 동시에 시작되며, 일반적으로는 RSA 키 교환 알고리즘이 사용된다.
+
+1. 클라이언트 -> 서버 메세지 전송 - 이때 핸드셰이크가 시작된다. 이 메세지에는 TLS 버전, 암호화 알고리즘, 무작위 바이트 문자열이 포함된다.
+2. 서버 -> 클라이언트 메세지 전송 - 클라이언트의 메세지에 응답으로 서버의 SSL인증서, 선택한 암호화 알고리즘, 서버에서 생성한 무작위 바이트 문자열을 포함한 메세지를 전송한다.
+3. 인증 - 클라이언트가 서버의 SSL인증서를 인증 발행 기관에 검증한다.
+4. 예비 마스터 암호 - 클라이언트는 무작위 바이트 문자열을 공개 키로 암호화된 premater secret 키를 서버로 전송한다.
+5. 개인 키 사용 - 서버가 premaster secret 키를 개인 키를 통해 복호화한다. (개인 키로만 복호화 가능)
+6. 세션 키 생성 - 클라이언트와 서버는 클라이언트가 생성한 무작위 키, 서버가 생성한 무작위 키, premaster secret 키를 통해 세션 키를 생성한다. 양쪽은 같은 키가 생성되어야 한다.
+7. 클라이언트 완료 전송 - 클라이언트는 세션 키로 암호화된 완료 메세지를 전송한다.
+8. 서버 완료 전송 - 서버도 세션 키로 암호화된 완료 메세지를 전송한다.
+9. 핸드셰이크 완료 - 핸드셰이크가 완료되고, 세션 키를 이용해 통신을 진행한다.
+
+## 2.1. SSL/TLS 인증서
+
+인증서를 발급하는 기관을 CA(certificate authority)라 한다.
+
+SSL 인증서에는 공개키가 포함되는데, 이 공개키로 클라이언트는 암호화를 한다. 이때 서버는 공개되지 않은 개인 키로 클라이언트가 공개키로 암호화한 암호문을 복호화 한다.
+
+그래서 공개키 암호화 또는 비대칭키 암호화라고도 한다.
+
+[TLS란? | 네트워크 보안 프로토콜 | Cloudflare](https://www.cloudflare.com/ko-kr/learning/ssl/transport-layer-security-tls/)
+
+https://kanoos-stu.tistory.com/46
+
+[https://aws-hyoh.tistory.com/entry/HTTPS-통신과정-쉽게-이해하기-3SSL-Handshake](https://aws-hyoh.tistory.com/entry/HTTPS-%ED%86%B5%EC%8B%A0%EA%B3%BC%EC%A0%95-%EC%89%BD%EA%B2%8C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-3SSL-Handshake)
+
 # 13. 다이제이스 인증
 
 기본 보안을 안전하게 이용하는 유일한 방법은 SSL과 결합해서 사용하는 것이다.
